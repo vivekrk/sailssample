@@ -1,0 +1,7 @@
+{
+  "generators": {
+    "modules": {
+    	"test": "sails-generate-unittest"
+    }
+  }
+}
