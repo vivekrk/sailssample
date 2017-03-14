@@ -11,5 +11,6 @@ module.exports = {
     models: {
         connection: 'localDiskDb',
         migrate: 'drop'
-    }
+    },
+    secret: 'mysecret'
 };

@@ -14,6 +14,10 @@ module.exports = {
         shortcuts: false,
         rest: false
     },
+    'check': function(req, res) {
+        //console.log(req.user);
+        return res.json(req.user);
+    },
 
     'signup': function(req, res) {
         User.create(req.body).exec(function(err, user) {
@@ -23,11 +27,12 @@ module.exports = {
             return res.json(user);
         });
     },
+
     'login': function(req, res) {
         //Return error if email or password are not passed
         if (!req.body.email || !req.body.password) {
             return res.badRequest({
-                err: ["Email or password cannot be empty"]
+                err: "Email or password cannot be empty"
             });
         }
         //Find the user from email
@@ -38,16 +43,19 @@ module.exports = {
                 return res.serverError(err);
             }
             if (!user) {
-                return res.notFound({err: ['Could not find email,' + req.body.email + ' sorry.']});
+                return res.notFound({err: 'Could not find email,' + req.body.email + ' sorry.'});
             }
             //Compare the password
             bcrypt.compare(req.body.password, user.encryptedPassword, function(err, result) {
                 if(result) {
                 	//password is a match
-                	return res.json(user);
+                	return res.json({
+                        user:user,
+                        token: jwToken.sign(user)
+                    });
                 } else {
                 	//password is not a match
-                	return res.forbidden({err: ['Email and password combination do not match']});
+                	return res.forbidden({err: 'Email and password combination do not match'});
                 }
             });
         });

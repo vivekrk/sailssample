@@ -34,5 +34,6 @@ module.exports = {
   // log: {
   //   level: "silent"
   // }
+  secret: 'mysecret'
 
 };

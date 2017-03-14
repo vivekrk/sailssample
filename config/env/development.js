@@ -20,5 +20,6 @@ module.exports = {
   // models: {
   //   connection: 'someMongodbServer'
   // }
+  secret: 'mysecret'
 
 };
